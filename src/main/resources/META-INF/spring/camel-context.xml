@@ -12,18 +12,18 @@
 	   http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://camel.apache.org/schema/spring
        http://camel.apache.org/schema/spring/camel-spring.xsd
-                                  http://activemq.apache.org/schema/core 
-                           http://activemq.apache.org/schema/core/activemq-core.xsd">
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
 
 	<!-- scan packages for all @Components -->
 	<context:component-scan base-package="in.misk" />
 	<context:component-scan base-package="in.misk.timed.route" />
 
-    <!-- Load a property that changes the embedded broker port -->
+	<!-- Load a property that changes the embedded broker port -->
 	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
 
 	<!-- Import the embedded broker settings. -->
-	<import resource="classpath:META-INF/spring/embedded-broker-context.xml" /> 
+	<import resource="classpath:META-INF/spring/embedded-broker-context.xml" />
 
 
 	<!-- Start the camel context and start all routes that extends SpringRouteBuilder -->
