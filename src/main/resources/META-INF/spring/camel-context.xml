@@ -19,9 +19,10 @@
 	<context:component-scan base-package="in.misk" />
 	<context:component-scan base-package="in.misk.timed.route" />
 
-
+    <!-- Load a property that changes the embedded broker port -->
 	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
-	<!-- Import the internal broker settings. -->
+
+	<!-- Import the embedded broker settings. -->
 	<import resource="classpath:META-INF/spring/embedded-broker-context.xml" /> 
 
 

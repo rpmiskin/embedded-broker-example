@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>in.misk</groupId>
-	<artifactId>timed-route</artifactId>
+	<artifactId>embedded-broker-example</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>A Camel Spring Route</name>
-	<url>http://www.myorganization.org</url>
+	<name>A Camel Spring route making use of the embedded broker</name>
+	<url>https://github.com/rpmiskin/embedded-broker-example</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
