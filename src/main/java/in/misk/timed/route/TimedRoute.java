@@ -30,6 +30,11 @@ public class TimedRoute extends SpringRouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+
+		onException(Exception.class).useOriginalMessage().log("Exception")
+				.handled(true).setHeader("exception", constant("exception"))
+				.to(QUEUE);
+
 		from("timer://foo?period=100").log("ping").to(QUEUE);
 
 		from(QUEUE).delay(getDelay()).log("        pong!").stop();
@@ -42,7 +47,10 @@ public class TimedRoute extends SpringRouteBuilder {
 
 			@Override
 			public <T> T evaluate(final Exchange arg0, final Class<T> arg1) {
-				final Long l = Long.valueOf(r.nextInt(100) + 50);
+				final Long l = Long.valueOf(1000);
+				if (r.nextBoolean()) {
+					throw new RuntimeException();
+				}
 				T retVal = null;
 				if (arg1.isAssignableFrom(l.getClass())) {
 					retVal = arg1.cast(l);
