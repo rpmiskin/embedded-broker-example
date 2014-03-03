@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Builder to make bean method use a little clearer.
  * <p>
  * Rather than doing:<br>
- * bean(obj, "methodName(param1, param2)") you can do bean(obj, method("name")<br>
+ * bean(obj, "method(param1, param2)") you can do bean(obj, method("name")<br>
  * .param("param1")<br>
  * .param("param2")<br>
  * .done())

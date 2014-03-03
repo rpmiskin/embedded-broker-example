@@ -11,7 +11,7 @@ public class BeanMethodExample {
 		LOG.info("method1 (" + str + ")");
 	}
 
-	public void method2(final String str, final String str2) {
-		LOG.info("method1 (" + str + ", " + str2 + ")");
+	public void method2(final String str, final int i) {
+		LOG.info("method2 (" + str + ", " + i + ")");
 	}
 }

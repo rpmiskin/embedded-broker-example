@@ -8,7 +8,7 @@ public abstract class RouteBuilder extends SpringRouteBuilder {
 		super();
 	}
 
-	public BeanMethodBuilder methodSignature(final String s) {
+	public BeanMethodBuilder method(final String s) {
 		return new BeanMethodBuilder(s);
 	}
 

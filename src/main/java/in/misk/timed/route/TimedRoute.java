@@ -33,21 +33,28 @@ public class TimedRoute extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+		//@formatter:off
+		onException(Exception.class).
+			useOriginalMessage()
+			.log("Exception:")
+			.handled(true)
+			.setHeader("exception", constant("exception"))
+			.to(QUEUE);
 
-		onException(Exception.class).useOriginalMessage().log("Exception:")
-				.handled(true).setHeader("exception", constant("exception"))
-				.to(QUEUE);
-
-		from("timer://foo?period=1000").log("ping").to(QUEUE);
+		from("timer://foo?period=1000")
+			.log("ping")
+			.to(QUEUE);
 
 		from(QUEUE)
 				.setBody()
 				.constant("bodyString")
-				.bean(bean,
-						methodSignature("method2").param("${body}")
-								.param("123").done()).delay(getDelay())
+				.bean(bean, method("method1").done())
+				.bean(bean, 
+				      method("method2").param("${body}")
+									   .param("123").done())
+				.delay(getDelay())
 				.log("        pong!").stop();
-
+		//@formatter:on
 	}
 
 	/** Creates an expression for a random delay. */
