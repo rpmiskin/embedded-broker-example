@@ -52,6 +52,7 @@ public class TimedRoute extends RouteBuilder {
 				.bean(bean, 
 				      method("method2").param("${body}")
 									   .param("123").done())
+			    .bean(bean, "method2(${body},123)")
 				.delay(getDelay())
 				.log("        pong!").stop();
 		//@formatter:on
