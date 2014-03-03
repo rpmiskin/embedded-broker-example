@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;
-import org.apache.camel.spring.SpringRouteBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +22,10 @@ import org.springframework.stereotype.Component;
  * </p>
  */
 @Component
-public class TimedRoute extends SpringRouteBuilder {
+public class TimedRoute extends RouteBuilder {
+
+	@Autowired
+	BeanMethodExample bean;
 
 	private static final String QUEUE = "embedded:a.queue";
 	// private static final String QUEUE = "direct:not.a.queue";
@@ -31,13 +34,19 @@ public class TimedRoute extends SpringRouteBuilder {
 	@Override
 	public void configure() throws Exception {
 
-		onException(Exception.class).useOriginalMessage().log("Exception")
+		onException(Exception.class).useOriginalMessage().log("Exception:")
 				.handled(true).setHeader("exception", constant("exception"))
 				.to(QUEUE);
 
-		from("timer://foo?period=100").log("ping").to(QUEUE);
+		from("timer://foo?period=1000").log("ping").to(QUEUE);
 
-		from(QUEUE).delay(getDelay()).log("        pong!").stop();
+		from(QUEUE)
+				.setBody()
+				.constant("bodyString")
+				.bean(bean,
+						methodSignature("method2").param("${body}")
+								.param("123").done()).delay(getDelay())
+				.log("        pong!").stop();
 
 	}
 
@@ -48,9 +57,9 @@ public class TimedRoute extends SpringRouteBuilder {
 			@Override
 			public <T> T evaluate(final Exchange arg0, final Class<T> arg1) {
 				final Long l = Long.valueOf(1000);
-				if (r.nextBoolean()) {
-					throw new RuntimeException();
-				}
+				// if (r.nextBoolean()) {
+				// throw new RuntimeException();
+				// }
 				T retVal = null;
 				if (arg1.isAssignableFrom(l.getClass())) {
 					retVal = arg1.cast(l);
